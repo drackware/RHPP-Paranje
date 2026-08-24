@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    Kalkulator Keuntungan Ayam Broiler
+</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+    margin:0;
+    padding:20px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 10px rgba(0,0,0,.1);
+}
+
+h2{
+    margin-top:0;
+}
+
+h3{
+    margin-top:25px;
+}
+
+h4{
+    margin-bottom:8px;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+input,
+select{
+    width:100%;
+    padding:9px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    font-size:14px;
+    background:#fff;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+th,
+td{
+    border:1px solid #ddd;
+    padding:8px;
+    text-align:center;
+}
+
+th{
+    background:#f0f0f0;
+}
+
+.harga-auto{
+    background:#e8f5e9;
+    color:#087f23;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.bb-auto{
+    background:#f7f7f7;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.omzet-auto{
+    background:#eef7ff;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.btn{
+    padding:10px 15px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.btn-tambah{
+    background:#007bff;
+    color:white;
+}
+
+.btn-hapus{
+    background:#dc3545;
+    color:white;
+    padding:7px 10px;
+}
+
+.btn-hitung{
+    background:#28a745;
+    color:white;
+    width:100%;
+    margin-top:15px;
+    font-size:16px;
+}
+
+.info{
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+    padding:12px;
+    margin-bottom:20px;
+    line-height:1.6;
+}
+
+.result{
+    display:none;
+    margin-top:20px;
+    background:#eef8ee;
+    padding:15px;
+    border-radius:8px;
+}
+
+.total{
+    font-size:24px;
+    font-weight:bold;
+    color:#0b7a2a;
+    margin-top:10px;
+}
+
+.bonus-box{
+    background:#fff8e1;
+    border-left:4px solid #ffc107;
+    padding:12px;
+    margin-top:15px;
+}
+
+.pph-box{
+    background:#fff3f3;
+    border-left:4px solid #dc3545;
+    padding:12px;
+    margin-top:15px;
+}
+
+.kontrak-box{
+    background:#eef7ff;
+    border-left:4px solid #007bff;
+    padding:15px;
+    margin-bottom:20px;
+}
+
+.kontrak-info{
+    background:white;
+    border:1px solid #dce9f5;
+    padding:12px;
+    border-radius:5px;
+    margin-top:12px;
+    line-height:1.7;
+}
+
+@media(max-width:750px){
+
+    body{
+        padding:10px;
+    }
+
+    .container{
+        padding:12px;
+    }
+
+    table{
+        font-size:12px;
+    }
+
+    th,
+    td{
+        padding:5px;
+    }
+
+    input,
+    select{
+        padding:7px;
+        font-size:12px;
+    }
+
+    .btn{
+        font-size:12px;
+        padding:8px 10px;
+    }
+
+    .total{
+        font-size:20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>
+    Kalkulator Keuntungan Ayam Broiler
+</h2>
+
+
+<div class="info">
+
+    <b>
+        Harga dihitung otomatis PER INPUTAN / PANEN.
+    </b>
+
+    <br><br>
+
+    BB setiap panen =
+    <b>
+        Total Bobot ÷ Jumlah Ekor
+    </b>
+
+    <br><br>
+
+    Harga kontrak ditentukan otomatis berdasarkan
+    <b>
+        BB rata-rata masing-masing nota.
+    </b>
+
+    <br><br>
+
+    Pilih jenis kontrak
+    <b>
+        8 Juta, 10 Juta, atau 12 Juta.
+    </b>
+
+</div>
+
+
+<!-- =================================================
+     PILIH KONTRAK
+================================================= -->
+
+<div class="kontrak-box">
+
+    <h3>
+        Pilih Harga Kontrak
+    </h3>
+
+    <div class="form-group">
+
+        <label>
+            Jenis Kontrak
+        </label>
+
+        <select
+            id="jenisKontrak"
+            onchange="ubahKontrak()"
+        >
+
+            <option value="8000000">
+                Kontrak 8 Juta
+            </option>
+
+            <option value="10000000">
+                Kontrak 10 Juta
+            </option>
+
+            <option
+                value="12000000"
+                selected
+            >
+                Kontrak 12 Juta
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div
+        id="infoKontrak"
+        class="kontrak-info"
+    ></div>
+
+</div>
+
+
+<!-- =================================================
+     DATA PRODUKSI
+================================================= -->
+
+<h3>
+    Data Produksi
+</h3>
+
+
+<div class="form-group">
+
+    <label>
+        Jumlah DOC Masuk (Ekor)
+    </label>
+
+    <input
+        type="number"
+        id="jumlahDoc"
+        min="0"
+        placeholder="Contoh: 5000"
+    >
+
+</div>
+
+
+<div class="form-group">
+
+    <label>
+        Total Pakan Starter (Sak 50 Kg)
+    </label>
+
+    <input
+        type="number"
+        id="starter"
+        step="0.01"
+        min="0"
+        placeholder="Contoh: 100"
+    >
+
+</div>
+
+
+<div class="form-group">
+
+    <label>
+        Total Pakan Lain / Grower (Sak 50 Kg)
+    </label>
+
+    <input
+        type="number"
+        id="grower"
+        step="0.01"
+        min="0"
+        placeholder="Contoh: 150"
+    >
+
+</div>
+
+
+<!-- =================================================
+     PPH
+================================================= -->
+
+<div class="pph-box">
+
+    <h4>
+        Potongan PPH
+    </h4>
+
+    <div class="form-group">
+
+        <label>
+            Kurangi PPH 2,5%?
+        </label>
+
+        <select id="pakaiPPH">
+
+            <option value="tidak">
+                Tidak
+            </option>
+
+            <option value="ya">
+                Ya
+            </option>
+
+        </select>
+
+    </div>
+
+    <small>
+
+        Jika "Ya", PPH 2,5% dihitung dari:
+
+        <br>
+
+        <b>
+            (Laba Kotor × 60%)
+            + Bonus Kontrak
+            + Bonus Pasar
+        </b>
+
+    </small>
+
+</div>
+
+
+<!-- =================================================
+     BONUS PASAR
+================================================= -->
+
+<div class="bonus-box">
+
+    <h4>
+        Bonus Pasar
+    </h4>
+
+    <div class="form-group">
+
+        <label>
+            Bonus Pasar (Rp)
+        </label>
+
+        <input
+            type="number"
+            id="bonusPasar"
+            min="0"
+            step="1"
+            value="0"
+            placeholder="Contoh: 5000000"
+        >
+
+    </div>
+
+    <small>
+        Isi sesuai bonus pasar yang kamu terima.
+    </small>
+
+</div>
+
+
+<!-- =================================================
+     DATA PANEN
+================================================= -->
+
+<h3>
+    Data Panen / Nota
+</h3>
+
+
+<table>
+
+<thead>
+
+<tr>
+
+    <th>
+        Panen
+    </th>
+
+    <th>
+        Jumlah Ekor
+    </th>
+
+    <th>
+        Total Bobot (Kg)
+    </th>
+
+    <th>
+        BB Rata-rata
+    </th>
+
+    <th>
+        Harga Kontrak / Kg
+    </th>
+
+    <th>
+        Omzet
+    </th>
+
+    <th>
+        Aksi
+    </th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="bodyPanen">
+
+<tr>
+
+    <td>
+        1
+    </td>
+
+
+    <td>
+
+        <input
+            type="number"
+            class="ekor"
+            min="0"
+            placeholder="Ekor"
+            oninput="updateBaris(this)"
+        >
+
+    </td>
+
+
+    <td>
+
+        <input
+            type="number"
+            class="bobot"
+            step="0.01"
+            min="0"
+            placeholder="Kg"
+            oninput="updateBaris(this)"
+        >
+
+    </td>
+
+
+    <td class="bb-auto">
+        -
+    </td>
+
+
+    <td class="harga-auto">
+        -
+    </td>
+
+
+    <td class="omzet-auto">
+        -
+    </td>
+
+
+    <td>
+        -
+    </td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+
+<br>
+
+
+<button
+    type="button"
+    class="btn btn-tambah"
+    onclick="tambahPanen()"
+>
+
+    + Tambah Panen
+
+</button>
+
+
+<button
+    type="button"
+    class="btn btn-hitung"
+    onclick="hitung()"
+>
+
+    Hitung Keuntungan
+
+</button>
+
+
+<!-- =================================================
+     HASIL
+================================================= -->
+
+<div
+    id="hasil"
+    class="result"
+></div>
+
+
+</div>
+
+
+<script>
+
+
+/* =====================================================
+   DATA SEMUA KONTRAK
+===================================================== */
+
+const DATA_KONTRAK = {
+
+
+    /* ===============================================
+       KONTRAK 8 JUTA
+    =============================================== */
+
+    8000000:{
+
+        nama:"Kontrak 8 Juta",
+
+        bonus:8000000,
+
+        hargaDoc:6925,
+
+        hargaStarter:8300,
+
+        hargaGrower:8225,
+
+        hargaObat:400,
+
+        hargaKontrak:{
+
+            1.0:19400,
+
+            1.2:19300,
+
+            1.4:19200,
+
+            1.6:19100,
+
+            1.8:19000,
+
+            2.0:18900,
+
+            2.2:18800,
+
+            max:18700
+
+        }
+
+    },
+
+
+    /* ===============================================
+       KONTRAK 10 JUTA
+    =============================================== */
+
+    10000000:{
+
+        nama:"Kontrak 10 Juta",
+
+        bonus:10000000,
+
+        hargaDoc:7050,
+
+        hargaStarter:8350,
+
+        hargaGrower:8300,
+
+        hargaObat:400,
+
+        hargaKontrak:{
+
+            1.0:19450,
+
+            1.2:19350,
+
+            1.4:19250,
+
+            1.6:19150,
+
+            1.8:19050,
+
+            2.0:18950,
+
+            2.2:18850,
+
+            max:18750
+
+        }
+
+    },
+
+
+    /* ===============================================
+       KONTRAK 12 JUTA
+    =============================================== */
+
+    12000000:{
+
+        nama:"Kontrak 12 Juta",
+
+        bonus:12000000,
+
+        hargaDoc:7200,
+
+        hargaStarter:8450,
+
+        hargaGrower:8350,
+
+        hargaObat:400,
+
+        hargaKontrak:{
+
+            1.0:19500,
+
+            1.2:19400,
+
+            1.4:19300,
+
+            1.6:19200,
+
+            1.8:19100,
+
+            2.0:19000,
+
+            2.2:18900,
+
+            max:18800
+
+        }
+
+    }
+
+};
+
+
+/* =====================================================
+   KONSTANTA
+===================================================== */
+
+const KG_PER_SAK = 50;
+
+const PERSEN_PPH = 0.025;
+
+const PERSEN_KEUNTUNGAN = 0.60;
+
+
+/* =====================================================
+   FORMAT RUPIAH
+===================================================== */
+
+function rupiah(angka){
+
+    return "Rp " +
+        Math.round(angka)
+        .toLocaleString("id-ID");
+
+}
+
+
+/* =====================================================
+   AMBIL DATA KONTRAK
+===================================================== */
+
+function getKontrakAktif(){
+
+    const nilai =
+        document.getElementById(
+            "jenisKontrak"
+        ).value;
+
+    return DATA_KONTRAK[nilai];
+
+}
+
+
+/* =====================================================
+   TAMPILKAN INFO KONTRAK
+===================================================== */
+
+function tampilInfoKontrak(){
+
+    const kontrak =
+        getKontrakAktif();
+
+
+    document.getElementById(
+        "infoKontrak"
+    ).innerHTML = `
+
+        <b>
+            ${kontrak.nama}
+        </b>
+
+        <br>
+
+        Harga DOC:
+        <b>
+            ${rupiah(kontrak.hargaDoc)}
+            / Ekor
+        </b>
+
+        <br>
+
+        Pakan Starter:
+        <b>
+            ${rupiah(kontrak.hargaStarter)}
+            / Kg
+        </b>
+
+        <br>
+
+        Pakan Lain / Grower:
+        <b>
+            ${rupiah(kontrak.hargaGrower)}
+            / Kg
+        </b>
+
+        <br>
+
+        OVK:
+        <b>
+            ${rupiah(kontrak.hargaObat)}
+            / Ekor DOC
+        </b>
+
+        <br>
+
+        Bonus Kontrak:
+        <b>
+            ${rupiah(kontrak.bonus)}
+        </b>
+
+    `;
+
+}
+
+
+/* =====================================================
+   UBAH KONTRAK
+===================================================== */
+
+function ubahKontrak(){
+
+    tampilInfoKontrak();
+
+
+    const rows =
+        document.querySelectorAll(
+            "#bodyPanen tr"
+        );
+
+
+    rows.forEach(row=>{
+
+        const input =
+            row.querySelector(".ekor");
+
+        if(input){
+
+            updateBaris(input);
+
+        }
+
+    });
+
+
+    document.getElementById(
+        "hasil"
+    ).style.display = "none";
+
+}
+
+
+/* =====================================================
+   HARGA KONTRAK BERDASARKAN BB
+===================================================== */
+
+function getHargaKontrak(bb){
+
+    const kontrak =
+        getKontrakAktif();
+
+
+    const harga =
+        kontrak.hargaKontrak;
+
+
+    if(bb <= 1.0){
+
+        return harga[1.0];
+
+    }
+
+
+    if(bb <= 1.2){
+
+        return harga[1.2];
+
+    }
+
+
+    if(bb <= 1.4){
+
+        return harga[1.4];
+
+    }
+
+
+    if(bb <= 1.6){
+
+        return harga[1.6];
+
+    }
+
+
+    if(bb <= 1.8){
+
+        return harga[1.8];
+
+    }
+
+
+    if(bb <= 2.0){
+
+        return harga[2.0];
+
+    }
+
+
+    if(bb <= 2.2){
+
+        return harga[2.2];
+
+    }
+
+
+    return harga.max;
+
+}
+
+
+/* =====================================================
+   UPDATE SATU BARIS
+===================================================== */
+
+function updateBaris(input){
+
+    const row =
+        input.closest("tr");
+
+
+    const ekorInput =
+        row.querySelector(".ekor");
+
+
+    const bobotInput =
+        row.querySelector(".bobot");
+
+
+    const bbCell =
+        row.querySelector(".bb-auto");
+
+
+    const hargaCell =
+        row.querySelector(".harga-auto");
+
+
+    const omzetCell =
+        row.querySelector(".omzet-auto");
+
+
+    const ekor =
+        Number(ekorInput.value) || 0;
+
+
+    const bobot =
+        Number(bobotInput.value) || 0;
+
+
+    if(
+        ekor <= 0 ||
+        bobot <= 0
+    ){
+
+        bbCell.innerText = "-";
+
+        hargaCell.innerText = "-";
+
+        omzetCell.innerText = "-";
+
+        return;
+
+    }
+
+
+    const bb =
+        bobot / ekor;
+
+
+    const harga =
+        getHargaKontrak(bb);
+
+
+    const omzet =
+        bobot * harga;
+
+
+    bbCell.innerText =
+        bb.toFixed(3) + " Kg";
+
+
+    hargaCell.innerText =
+        rupiah(harga);
+
+
+    omzetCell.innerText =
+        rupiah(omzet);
+
+}
+
+
+/* =====================================================
+   TAMBAH PANEN
+===================================================== */
+
+function tambahPanen(){
+
+    const tbody =
+        document.getElementById(
+            "bodyPanen"
+        );
+
+
+    const nomor =
+        tbody.rows.length + 1;
+
+
+    const row =
+        tbody.insertRow();
+
+
+    row.innerHTML = `
+
+        <td>
+            ${nomor}
+        </td>
+
+
+        <td>
+
+            <input
+                type="number"
+                class="ekor"
+                min="0"
+                placeholder="Ekor"
+                oninput="updateBaris(this)"
+            >
+
+        </td>
+
+
+        <td>
+
+            <input
+                type="number"
+                class="bobot"
+                step="0.01"
+                min="0"
+                placeholder="Kg"
+                oninput="updateBaris(this)"
+            >
+
+        </td>
+
+
+        <td class="bb-auto">
+            -
+        </td>
+
+
+        <td class="harga-auto">
+            -
+        </td>
+
+
+        <td class="omzet-auto">
+            -
+        </td>
+
+
+        <td>
+
+            <button
+                type="button"
+                class="btn btn-hapus"
+                onclick="hapusBaris(this)"
+            >
+                Hapus
+            </button>
+
+        </td>
+
+    `;
+
+}
+
+
+/* =====================================================
+   HAPUS PANEN
+===================================================== */
+
+function hapusBaris(button){
+
+    button
+        .closest("tr")
+        .remove();
+
+
+    const rows =
+        document.querySelectorAll(
+            "#bodyPanen tr"
+        );
+
+
+    rows.forEach((row,index)=>{
+
+        row.cells[0].innerText =
+            index + 1;
+
+    });
+
+}
+
+
+/* =====================================================
+   HITUNG KEUNTUNGAN
+===================================================== */
+
+function hitung(){
+
+
+    /* ===============================================
+       DATA KONTRAK AKTIF
+    =============================================== */
+
+    const kontrak =
+        getKontrakAktif();
+
+
+    /* ===============================================
+       DATA UTAMA
+    =============================================== */
+
+    const doc =
+        Number(
+            document.getElementById(
+                "jumlahDoc"
+            ).value
+        ) || 0;
+
+
+    const starter =
+        Number(
+            document.getElementById(
+                "starter"
+            ).value
+        ) || 0;
+
+
+    const grower =
+        Number(
+            document.getElementById(
+                "grower"
+            ).value
+        ) || 0;
+
+
+    const bonusPasar =
+        Number(
+            document.getElementById(
+                "bonusPasar"
+            ).value
+        ) || 0;
+
+
+    const pakaiPPH =
+        document.getElementById(
+            "pakaiPPH"
+        ).value;
+
+
+    /* ===============================================
+       VARIABEL TOTAL
+    =============================================== */
+
+    let totalEkor = 0;
+
+    let totalBobot = 0;
+
+    let omzet = 0;
+
+    let detailPanen = "";
+
+
+    /* ===============================================
+       LOOP PANEN
+    =============================================== */
+
+    const rows =
+        document.querySelectorAll(
+            "#bodyPanen tr"
+        );
+
+
+    rows.forEach((row,index)=>{
+
+
+        const ekor =
+            Number(
+                row.querySelector(
+                    ".ekor"
+                ).value
+            ) || 0;
+
+
+        const bobot =
+            Number(
+                row.querySelector(
+                    ".bobot"
+                ).value
+            ) || 0;
+
+
+        if(
+            ekor <= 0 ||
+            bobot <= 0
+        ){
+
+            return;
+
+        }
+
+
+        const bb =
+            bobot / ekor;
+
+
+        const harga =
+            getHargaKontrak(bb);
+
+
+        const omzetNota =
+            bobot * harga;
+
+
+        totalEkor += ekor;
+
+        totalBobot += bobot;
+
+        omzet += omzetNota;
+
+
+        detailPanen += `
+
+            <tr>
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    ${ekor.toLocaleString("id-ID")}
+                </td>
+
+                <td>
+                    ${bobot.toLocaleString("id-ID")}
+                </td>
+
+                <td>
+                    ${bb.toFixed(3)} Kg
+                </td>
+
+                <td>
+                    ${rupiah(harga)}
+                </td>
+
+                <td>
+                    ${rupiah(omzetNota)}
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+
+    /* ===============================================
+       VALIDASI
+    =============================================== */
+
+    if(totalEkor <= 0){
+
+        alert(
+            "Masukkan minimal satu data panen."
+        );
+
+        return;
+
+    }
+
+
+    if(totalBobot <= 0){
+
+        alert(
+            "Total bobot panen harus lebih dari 0."
+        );
+
+        return;
+
+    }
+
+
+    /* ===============================================
+       BB KESELURUHAN
+    =============================================== */
+
+    const bbKeseluruhan =
+        totalBobot / totalEkor;
+
+
+    /* ===============================================
+       TOTAL PAKAN
+    =============================================== */
+
+    const totalKgStarter =
+        starter * KG_PER_SAK;
+
+
+    const totalKgGrower =
+        grower * KG_PER_SAK;
+
+
+    /* ===============================================
+       BIAYA
+    =============================================== */
+
+    const biayaDoc =
+        doc *
+        kontrak.hargaDoc;
+
+
+    const biayaObat =
+        doc *
+        kontrak.hargaObat;
+
+
+    const biayaStarter =
+        totalKgStarter *
+        kontrak.hargaStarter;
+
+
+    const biayaGrower =
+        totalKgGrower *
+        kontrak.hargaGrower;
+
+
+    /* ===============================================
+       TOTAL OPERASIONAL
+    =============================================== */
+
+    const totalOperasional =
+
+        biayaDoc +
+
+        biayaObat +
+
+        biayaStarter +
+
+        biayaGrower;
+
+
+    /* ===============================================
+       LABA KOTOR
+    =============================================== */
+
+    const labaKotor =
+        omzet -
+        totalOperasional;
+
+
+    /* ===============================================
+       BAGIAN 60%
+    =============================================== */
+
+    const bagian60 =
+        labaKotor *
+        PERSEN_KEUNTUNGAN;
+
+
+    /* ===============================================
+       BONUS KONTRAK
+    =============================================== */
+
+    const bonusTetap =
+        kontrak.bonus;
+
+
+    /* ===============================================
+       DASAR PPH
+    =============================================== */
+
+    const dasarPPH =
+
+        bagian60 +
+
+        bonusTetap +
+
+        bonusPasar;
+
+
+    /* ===============================================
+       PPH
+    =============================================== */
+
+    let biayaPPH = 0;
+
+
+    if(pakaiPPH === "ya"){
+
+        biayaPPH =
+            dasarPPH *
+            PERSEN_PPH;
+
+    }
+
+
+    /* ===============================================
+       KEUNTUNGAN AKHIR
+    =============================================== */
+
+    const keuntunganAnda =
+        dasarPPH -
+        biayaPPH;
+
+
+    /* ===============================================
+       TAMPILKAN HASIL
+    =============================================== */
+
+    const hasil =
+        document.getElementById(
+            "hasil"
+        );
+
+
+    hasil.style.display =
+        "block";
+
+
+    hasil.innerHTML = `
+
+        <h3>
+            Hasil Perhitungan
+        </h3>
+
+
+        <h4>
+            Jenis Kontrak
+        </h4>
+
+        <div class="kontrak-info">
+
+            <b>
+                ${kontrak.nama}
+            </b>
+
+            <br>
+
+            Bonus Kontrak:
+            <b>
+                ${rupiah(bonusTetap)}
+            </b>
+
+        </div>
+
+
+        <h4>
+            Detail Per Panen / Nota
+        </h4>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Panen
+                    </th>
+
+                    <th>
+                        Ekor
+                    </th>
+
+                    <th>
+                        Bobot
+                    </th>
+
+                    <th>
+                        BB Rata-rata
+                    </th>
+
+                    <th>
+                        Harga/Kg
+                    </th>
+
+                    <th>
+                        Omzet
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                ${detailPanen}
+
+            </tbody>
+
+        </table>
+
+
+        <br>
+
+
+        <table>
+
+
+            <tr>
+
+                <td>
+                    Jenis Kontrak
+                </td>
+
+                <td>
+                    <b>
+                        ${kontrak.nama}
+                    </b>
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Total Ekor Panen
+                </td>
+
+                <td>
+                    ${totalEkor.toLocaleString("id-ID")}
+                    Ekor
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Total Bobot Panen
+                </td>
+
+                <td>
+                    ${totalBobot.toLocaleString("id-ID")}
+                    Kg
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    BB Rata-rata Keseluruhan
+                </td>
+
+                <td>
+                    ${bbKeseluruhan.toFixed(3)}
+                    Kg/Ekor
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    <b>
+                        Total Omzet Penjualan
+                    </b>
+                </td>
+
+                <td>
+                    <b>
+                        ${rupiah(omzet)}
+                    </b>
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Pakan Starter
+                </td>
+
+                <td>
+                    ${starter.toLocaleString("id-ID")}
+                    Sak
+
+                    <br>
+
+                    (${totalKgStarter.toLocaleString("id-ID")} Kg)
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Pakan Lain / Grower
+                </td>
+
+                <td>
+                    ${grower.toLocaleString("id-ID")}
+                    Sak
+
+                    <br>
+
+                    (${totalKgGrower.toLocaleString("id-ID")} Kg)
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Biaya DOC
+                </td>
+
+                <td>
+                    ${rupiah(biayaDoc)}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Biaya OVK
+                </td>
+
+                <td>
+                    ${rupiah(biayaObat)}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Biaya Pakan Starter
+                </td>
+
+                <td>
+                    ${rupiah(biayaStarter)}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Biaya Pakan Lain / Grower
+                </td>
+
+                <td>
+                    ${rupiah(biayaGrower)}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    <b>
+                        Total Operasional
+                    </b>
+                </td>
+
+                <td>
+                    <b>
+                        ${rupiah(totalOperasional)}
+                    </b>
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    <b>
+                        Laba Kotor
+                    </b>
+                </td>
+
+                <td>
+                    <b>
+                        ${rupiah(labaKotor)}
+                    </b>
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Bagian 60%
+                </td>
+
+                <td>
+                    ${rupiah(bagian60)}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Bonus Kontrak
+                </td>
+
+                <td>
+                    ${rupiah(bonusTetap)}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Bonus Pasar
+                </td>
+
+                <td>
+                    ${rupiah(bonusPasar)}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Dasar PPH
+                </td>
+
+                <td>
+                    ${rupiah(dasarPPH)}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    PPH 2,5%
+                </td>
+
+                <td>
+
+                    ${
+                        pakaiPPH === "ya"
+                        ? rupiah(biayaPPH)
+                        : "Tidak dipotong"
+                    }
+
+                </td>
+
+            </tr>
+
+
+        </table>
+
+
+        <br>
+
+
+        <div>
+
+            <b>
+                Rumus Keuntungan:
+            </b>
+
+            <br><br>
+
+            Laba Kotor =
+            Omzet − Total Operasional
+
+            <br><br>
+
+            Bagian 60% =
+            Laba Kotor × 60%
+
+            <br><br>
+
+            Keuntungan Akhir =
+            Bagian 60%
+            + Bonus Kontrak
+            + Bonus Pasar
+            − PPH
+
+        </div>
+
+
+        <br>
+
+
+        <div class="total">
+
+            Keuntungan Anda:
+
+            ${rupiah(keuntunganAnda)}
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   JALANKAN INFO KONTRAK SAAT HALAMAN DIBUKA
+===================================================== */
+
+tampilInfoKontrak();
+
+
+</script>
+
+
+</body>
+
+</html>
