@@ -90,6 +90,29 @@ td input{min-width:90px}
 }
 .btn:hover{filter:brightness(.95)}
 .btn-add{background:#007bff;color:#fff}
+.btn-excel{background:#217346;color:#fff}
+.btn-excel:hover{filter:brightness(.95)}
+.excel-help{
+    background:#f1f8f4;border:1px solid #c9e6d3;border-left:4px solid #217346;
+    padding:10px 12px;margin:10px 0 12px;border-radius:5px;line-height:1.6;
+}
+.modal-overlay{
+    display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);
+    z-index:9999;padding:20px;
+}
+.modal-box{
+    width:min(760px,100%);max-height:90vh;overflow:auto;margin:4vh auto;
+    background:#fff;border-radius:10px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,.25);
+}
+.modal-box h3{margin-bottom:8px}
+.modal-box textarea{
+    width:100%;min-height:220px;resize:vertical;border:1px solid #ccc;
+    border-radius:6px;padding:10px;font:14px/1.5 Arial,Helvetica,sans-serif;
+}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+.btn-secondary{background:#6c757d;color:#fff}
+.btn-success{background:#217346;color:#fff}
+
 .btn-del{background:#dc3545;color:#fff;padding:7px 10px}
 .btn-calc{
     background:#16a34a;
@@ -307,6 +330,13 @@ td input{min-width:90px}
 
 <div class="section-title">DATA PANEN / NOTA</div>
 
+<div class="excel-help">
+    <b>Paste data dari Excel:</b> salin 2 kolom <b>Jumlah Ekor</b> dan <b>Total Bobot (Kg)</b>,
+    lalu klik <b>Paste dari Excel</b>. Data akan otomatis menjadi beberapa baris panen.
+    <br><span class="small">Format: <code>Jumlah Ekor[TAB]Total Bobot</code>, satu panen per baris.
+    Header Excel boleh ikut disalin dan akan dilewati otomatis.</span>
+</div>
+
 <table>
 <thead>
 <tr>
@@ -334,7 +364,28 @@ td input{min-width:90px}
 
 <br>
 <button type="button" class="btn btn-add" onclick="tambahPanen()">+ Tambah Panen</button>
+<button type="button" class="btn btn-excel" onclick="bukaPasteExcel()">📋 Paste dari Excel</button>
 <button type="button" class="btn btn-calc" onclick="hitung()">Hitung Keuntungan</button>
+
+
+    <div id="excelModal" class="modal-overlay" onclick="tutupPasteExcelJikaLuar(event)">
+        <div class="modal-box">
+            <h3>📋 Paste Data Timbang dari Excel</h3>
+            <div class="small" style="margin-bottom:10px">
+                Salin dari Excel lalu paste ke kotak di bawah. Gunakan 2 kolom:
+                <b>Jumlah Ekor</b> dan <b>Total Bobot (Kg)</b>.
+            </div>
+            <textarea id="excelPaste" placeholder="Contoh:
+570	865.50
+620	1012.30
+580	945.20"></textarea>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="tutupPasteExcel()">Batal</button>
+                <button type="button" class="btn btn-success" onclick="prosesPasteExcel()">Masukkan ke Data Panen</button>
+            </div>
+            <div id="excelPasteInfo" class="small" style="margin-top:8px"></div>
+        </div>
+    </div>
 
 <div id="hasil" class="result"></div>
 
@@ -349,8 +400,8 @@ const DATA_KONTRAK = {
         nama:"Kontrak 8 Juta",
         bonus:8000000,
         hargaDoc:6925,
-        hargaPrestarter:8500,
-        hargaStarter:8300,
+        hargaPrestarter:8300,
+        hargaStarter:8225,
         hargaGrower:8225,
         hargaObat:400,
         hargaKontrak:{
@@ -369,8 +420,8 @@ const DATA_KONTRAK = {
         nama:"Kontrak 10 Juta",
         bonus:10000000,
         hargaDoc:7050,
-        hargaPrestarter:8500,
-        hargaStarter:8350,
+        hargaPrestarter:8350,
+        hargaStarter:8300,
         hargaGrower:8300,
         hargaObat:400,
         hargaKontrak:{
@@ -389,8 +440,8 @@ const DATA_KONTRAK = {
         nama:"Kontrak 12 Juta",
         bonus:12000000,
         hargaDoc:7200,
-        hargaPrestarter:8500,
-        hargaStarter:8450,
+        hargaPrestarter:8450,
+        hargaStarter:8350,
         hargaGrower:8350,
         hargaObat:400,
         hargaKontrak:{
@@ -953,6 +1004,125 @@ function hitung(){
 
     hasil.scrollIntoView({behavior:"smooth",block:"start"});
 }
+
+
+/* =========================================================
+   PASTE DATA TIMBANG DARI EXCEL
+   ========================================================= */
+function bukaPasteExcel(){
+    document.getElementById("excelModal").style.display = "block";
+    document.getElementById("excelPasteInfo").textContent = "";
+    setTimeout(() => document.getElementById("excelPaste").focus(), 50);
+}
+
+function tutupPasteExcel(){
+    document.getElementById("excelModal").style.display = "none";
+}
+
+function tutupPasteExcelJikaLuar(event){
+    if(event.target === document.getElementById("excelModal")) tutupPasteExcel();
+}
+
+function angkaExcel(value){
+    let s = String(value ?? "").trim();
+    if(!s) return NaN;
+    s = s.replace(/\u00A0/g, "").replace(/\s/g, "");
+    s = s.replace(/kg/ig, "").replace(/ekor/ig, "");
+
+    // Mendukung 1.234,56 dan 1234.56
+    if(s.includes(",") && s.includes(".")){
+        if(s.lastIndexOf(",") > s.lastIndexOf(".")){
+            s = s.replace(/\./g, "").replace(",", ".");
+        }else{
+            s = s.replace(/,/g, "");
+        }
+    }else if(s.includes(",")){
+        s = s.replace(",", ".");
+    }
+
+    s = s.replace(/[^0-9.+-]/g, "");
+    return Number(s);
+}
+
+function prosesPasteExcel(){
+    const raw = document.getElementById("excelPaste").value.trim();
+    const info = document.getElementById("excelPasteInfo");
+
+    if(!raw){
+        alert("Belum ada data Excel yang ditempel.");
+        return;
+    }
+
+    const data = [];
+    let dilewati = 0;
+
+    raw.split(/\r?\n/).forEach(line => {
+        if(!line.trim()) return;
+
+        let cols = line.split("\t");
+        if(cols.length < 2) cols = line.split(";");
+        if(cols.length < 2) cols = line.trim().split(/\s{2,}/);
+
+        if(cols.length < 2){
+            dilewati++;
+            return;
+        }
+
+        const ekor = angkaExcel(cols[0]);
+        const bobot = angkaExcel(cols[1]);
+
+        // Header atau baris non-angka otomatis dilewati
+        if(!Number.isFinite(ekor) || !Number.isFinite(bobot) || ekor <= 0 || bobot <= 0){
+            dilewati++;
+            return;
+        }
+
+        data.push({ekor, bobot});
+    });
+
+    if(!data.length){
+        alert("Data tidak terbaca. Pastikan Excel berisi 2 kolom: Jumlah Ekor dan Total Bobot (Kg).");
+        return;
+    }
+
+    const tbody = document.getElementById("bodyPanen");
+    tbody.innerHTML = "";
+
+    data.forEach((item, index) => {
+        const row = tbody.insertRow();
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td><input type="number" class="ekor" min="0" step="1"
+                placeholder="Ekor" value="${item.ekor}" oninput="updateBaris(this)"></td>
+            <td><input type="number" class="bobot" min="0" step="0.01"
+                placeholder="Kg" value="${item.bobot}" oninput="updateBaris(this)"></td>
+            <td class="bb-auto auto">-</td>
+            <td class="harga-auto auto">-</td>
+            <td class="omzet-auto auto">-</td>
+            <td><button type="button" class="btn btn-del" onclick="hapusBaris(this)">Hapus</button></td>
+        `;
+        updateBaris(row.querySelector(".ekor"));
+    });
+
+    info.textContent = "Berhasil memasukkan " + data.length + " data panen." +
+        (dilewati ? " " + dilewati + " baris dilewati." : "");
+
+    setTimeout(tutupPasteExcel, 700);
+}
+
+document.addEventListener("keydown", function(event){
+    if(event.ctrlKey && event.key === "Enter"){
+        const modal = document.getElementById("excelModal");
+        if(modal && modal.style.display === "block"){
+            event.preventDefault();
+            prosesPasteExcel();
+        }
+    }
+    if(event.key === "Escape"){
+        const modal = document.getElementById("excelModal");
+        if(modal && modal.style.display === "block") tutupPasteExcel();
+    }
+});
 
 /* Jalankan saat halaman dibuka */
 tampilInfoKontrak();
