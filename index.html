@@ -650,45 +650,70 @@ function hitung(){
         : 0;
 
     /* =====================================================
-       PEMBAGIAN HASIL
-       Sesuai struktur kode awal:
-       Penjualan - BOP - Paket = laba setelah paket
-       Bagian mitra = 60%
-       Paket + bonus pasar ditambahkan kembali ke hak mitra
+       LOGIKA BISNIS YANG DIGUNAKAN
+
+       BOP = DOC + PAKAN + OVK + PAKET KONTRAK
+
+       KOTOR = HASIL PENJUALAN - BOP
+
+       DASAR HAK MITRA =
+       (KOTOR x 60%) + PAKET KONTRAK + INSENTIF/BONUS
+
+       PPH = DASAR HAK MITRA x 2,5%
+
+       KEUNTUNGAN AKHIR =
+       DASAR HAK MITRA - PPH
        ===================================================== */
+
     const paketKontrak = kontrak.bonus;
 
-    const labaSetelahPaket =
-        omzet -
-        totalOperasional -
+    // Pakan = Prestarter + Starter + Grower
+    const totalBiayaPakan =
+        biayaPrestarter +
+        biayaStarter +
+        biayaGrower;
+
+    // BOP WAJIB memasukkan Paket Kontrak
+    const totalBOP =
+        biayaDoc +
+        totalBiayaPakan +
+        biayaObat +
+        bop +
         paketKontrak;
 
+    // Hasil Penjualan - seluruh BOP
+    const kotor =
+        omzet -
+        totalBOP;
+
+    // Pembagian kotor: Mitra 60% dan Paranje 40%
     const bagianMitra60 =
-        labaSetelahPaket * PERSEN_MITRA;
+        kotor * PERSEN_MITRA;
 
     const bagianParanje40 =
-        labaSetelahPaket * PERSEN_PARANJE;
+        kotor * PERSEN_PARANJE;
 
+    // Paket kontrak dan bonus/insentif ditambahkan kembali
     const hakMitraSebelumPPH =
-        bagianMitra60 +
+        (kotor * PERSEN_MITRA) +
         paketKontrak +
         bonusPasar;
 
-    const dasarPPH = hakMitraSebelumPPH;
+    // PPH dihitung dari penjumlahan di atas
+    const dasarPPH =
+        hakMitraSebelumPPH;
 
     const biayaPPH =
         pakaiPPH === "ya"
         ? dasarPPH * PERSEN_PPH
         : 0;
 
+    // Hasil akhir setelah PPH
     const keuntunganMitra =
         hakMitraSebelumPPH -
         biayaPPH;
 
-    /*
-      Grand total = bagian mitra + bagian paranje.
-      Ini menunjukkan rekonsiliasi pembagian 60/40.
-    */
+    // Rekonsiliasi pembagian kotor 60% + 40%
     const grandTotal =
         bagianMitra60 +
         bagianParanje40;
@@ -762,7 +787,7 @@ function hitung(){
                         </tr>
                         <tr class="total-row">
                             <td>TOTAL BOP</td>
-                            <td>${rupiah(totalOperasional)}</td>
+                            <td>${rupiah(totalBOP)}</td>
                         </tr>
                     </table>
                 </div>
@@ -824,16 +849,28 @@ function hitung(){
                             <td>${rupiah(omzet)}</td>
                         </tr>
                         <tr>
+                            <td>Total BOP (DOC + Pakan + OVK + Paket)</td>
+                            <td>${rupiah(totalBOP)}</td>
+                        </tr>
+                        <tr>
+                            <td>Hasil Penjualan</td>
+                            <td>${rupiah(omzet)}</td>
+                        </tr>
+                        <tr>
                             <td>Total BOP</td>
-                            <td>${rupiah(totalOperasional)}</td>
+                            <td>${rupiah(totalBOP)}</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td>KOTOR = Penjualan − BOP</td>
+                            <td>${rupiah(kotor)}</td>
                         </tr>
                         <tr>
                             <td>Paket Kontrak</td>
                             <td>${rupiah(paketKontrak)}</td>
                         </tr>
                         <tr>
-                            <td>Penjualan − BOP − Paket</td>
-                            <td>${rupiah(labaSetelahPaket)}</td>
+                            <td>HASIL PENJUALAN − BOP = KOTOR</td>
+                            <td>${rupiah(kotor)}</td>
                         </tr>
                         <tr>
                             <td>Bagian Mitra 60%</td>
@@ -874,7 +911,7 @@ function hitung(){
                 </tr>
                 <tr>
                     <td><b>TOTAL BOP</b></td>
-                    <td><b>${rupiah(totalOperasional)}</b></td>
+                    <td><b>${rupiah(totalBOP)}</b></td>
                 </tr>
                 <tr>
                     <td><b>MITRA 60%</b></td>
@@ -905,10 +942,10 @@ function hitung(){
             IP = (BB × Livability × 100) ÷ (FCR × Umur)<br><br>
 
             <b>Perhitungan hasil:</b><br>
-            Laba Setelah Paket = Total Penjualan − Total BOP − Paket Kontrak<br>
-            Mitra 60% = Laba Setelah Paket × 60%<br>
-            Paranje 40% = Laba Setelah Paket × 40%<br>
-            Hak Mitra Sebelum PPH = Mitra 60% + Paket Kontrak + Bonus Pasar<br>
+            BOP = DOC + PAKAN + OVK + PAKET KONTRAK<br>
+            Kotor = Hasil Penjualan − BOP<br>
+            Bagian Mitra = Kotor × 60%<br>
+            Hak Mitra Sebelum PPH = (Kotor × 60%) + Paket Kontrak + Insentif/Bonus<br>
             PPH = Hak Mitra Sebelum PPH × 2,5% (jika diaktifkan)<br>
             Keuntungan Akhir = Hak Mitra Sebelum PPH − PPH
         </div>
