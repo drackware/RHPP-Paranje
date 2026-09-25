@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON Transaction Viewer</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#eef3f8;
+    color:#17233c;
+}
+.container{
+    max-width:950px;
+    margin:30px auto;
+    padding:20px;
+}
+.input-box{
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:24px;
+    border-radius:18px;
+    box-shadow:0 8px 30px rgba(0,0,0,.07);
+}
+.input-box h2{margin:0 0 8px}
+.input-box p{
+    margin:0 0 18px;
+    color:#718096;
+    font-size:13px;
+}
+textarea{
+    width:100%;
+    height:300px;
+    border:1px solid #ccd5df;
+    border-radius:12px;
+    padding:15px;
+    resize:vertical;
+    font-family:Consolas,monospace;
+    font-size:12px;
+}
+.btn{
+    width:100%;
+    margin-top:15px;
+    padding:14px;
+    border:0;
+    border-radius:11px;
+    background:#1769aa;
+    color:white;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+.btn:hover{opacity:.92}
+#error{
+    display:none;
+    background:#ffecec;
+    color:#b42318;
+    padding:12px;
+    border-radius:9px;
+    margin-top:12px;
+    font-size:13px;
+}
+
+/* RESULT */
+
+#result{
+    display:none;
+    max-width:430px;
+    margin:30px auto;
+}
+.card{
+    background:#fff;
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:0 8px 30px rgba(0,0,0,.09);
+}
+.header{
+    background:#1769aa;
+    color:#fff;
+    padding:28px 24px 36px;
+    text-align:center;
+}
+.brand{
+    font-size:12px;
+    font-weight:bold;
+    letter-spacing:1.5px;
+}
+.check{
+    width:66px;
+    height:66px;
+    margin:21px auto 14px;
+    background:white;
+    color:#1769aa;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:35px;
+    font-weight:bold;
+}
+.header h1{
+    margin:0 0 7px;
+    font-size:22px;
+}
+.header p{
+    margin:0;
+    font-size:13px;
+    opacity:.9;
+}
+.amount{
+    text-align:center;
+    padding:25px;
+    border-bottom:1px solid #eee;
+}
+.amount small{
+    display:block;
+    color:#8791a2;
+    margin-bottom:8px;
+}
+.amount strong{
+    font-size:30px;
+}
+.content{padding:23px}
+.section-title{
+    font-size:12px;
+    color:#8b95a5;
+    font-weight:bold;
+    margin-bottom:17px;
+}
+.row{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:17px;
+    font-size:13px;
+}
+.label{
+    color:#7d8797;
+    flex:1;
+}
+.value{
+    flex:1.6;
+    text-align:right;
+    font-weight:600;
+    word-break:break-word;
+}
+.green{color:#159447}
+.red{color:#d92d20}
+.divider{
+    border:0;
+    border-top:1px dashed #d8dee8;
+    margin:22px 0;
+}
+.notice{
+    margin:0 22px 20px;
+    background:#fff7dd;
+    color:#725c18;
+    padding:12px;
+    border-radius:10px;
+    text-align:center;
+    font-size:10px;
+    line-height:1.5;
+}
+.actions{
+    padding:0 22px 24px;
+}
+.secondary{
+    background:white;
+    color:#1769aa;
+    border:1px solid #1769aa;
+}
+@media print{
+    body{background:white}
+    .container{margin:0;padding:0}
+    .input-box,.actions{display:none!important}
+    #result{display:block!important;margin:0 auto}
+    .card{box-shadow:none}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="input-box" id="inputPanel">
+        <h2>JSON Transaction Viewer</h2>
+        <p>Paste response JSON transaksi di bawah ini.</p>
+
+        <textarea id="jsonInput" placeholder='{
+    "success": true,
+    "step": "external_transfer",
+    ...
+}'></textarea>
+
+        <button class="btn" onclick="generateReceipt()">
+            Buat Tampilan
+        </button>
+
+        <div id="error"></div>
+    </div>
+
+    <div id="result">
+
+        <div class="card">
+
+            <div class="header">
+                <div class="brand">KONFIRMASI TRANSAKSI API</div>
+
+                <div class="check" id="statusIcon">✓</div>
+
+                <h1 id="statusTitle">Transaksi Berhasil</h1>
+                <p id="transactionDate">-</p>
+            </div>
+
+            <div class="amount">
+                <small>Nominal Transfer</small>
+                <strong id="amount">Rp0</strong>
+            </div>
+
+            <div class="content">
+
+                <div class="section-title">
+                    DETAIL PENERIMA
+                </div>
+
+                <div class="row">
+                    <div class="label">Nama</div>
+                    <div class="value" id="beneficiaryName">-</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">Kode Bank</div>
+                    <div class="value" id="bankCode">-</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">Rekening Tujuan</div>
+                    <div class="value" id="beneficiaryAccount">-</div>
+                </div>
+
+                <hr class="divider">
+
+                <div class="section-title">
+                    DETAIL TRANSAKSI
+                </div>
+
+                <div class="row">
+                    <div class="label">Status</div>
+                    <div class="value green" id="status">Berhasil</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">No. Referral</div>
+                    <div class="value" id="referral">-</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">Jurnal</div>
+                    <div class="value" id="journal">-</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">Response Code</div>
+                    <div class="value" id="responseCode">-</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">Keterangan</div>
+                    <div class="value" id="description">-</div>
+                </div>
+
+            </div>
+
+            <div class="notice">
+                BUKAN BUKTI TRANSFER RESMI BANK<br>
+                Tampilan ini dibuat berdasarkan data JSON/API yang dimasukkan.
+            </div>
+
+            <div class="actions">
+
+                <button class="btn" onclick="window.print()">
+                    Cetak / Simpan PDF
+                </button>
+
+                <button class="btn secondary" onclick="backToForm()">
+                    Masukkan JSON Lain
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function safe(value, fallback = "-"){
+    if(value === undefined || value === null || value === ""){
+        return fallback;
+    }
+    return String(value).trim();
+}
+
+function rupiah(value){
+    let number = parseFloat(value);
+
+    if(isNaN(number)){
+        return "Rp0";
+    }
+
+    return "Rp" + new Intl.NumberFormat("id-ID", {
+        maximumFractionDigits: 0
+    }).format(number);
+}
+
+function getTransferBody(data){
+
+    try{
+        const payload =
+            data.transfer?.request?.signature_payload || "";
+
+        const marker = "&body=";
+
+        const index = payload.indexOf(marker);
+
+        if(index === -1){
+            return {};
+        }
+
+        const body = payload.substring(index + marker.length);
+
+        return JSON.parse(body);
+
+    }catch(e){
+        return {};
+    }
+}
+
+function formatDate(timestamp){
+
+    if(!timestamp){
+        return "-";
+    }
+
+    try{
+
+        const date = new Date(timestamp);
+
+        return new Intl.DateTimeFormat("id-ID", {
+            timeZone:"Asia/Jakarta",
+            day:"2-digit",
+            month:"long",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit",
+            second:"2-digit",
+            hour12:false
+        }).format(date) + " WIB";
+
+    }catch(e){
+        return timestamp;
+    }
+}
+
+function generateReceipt(){
+
+    const input =
+        document.getElementById("jsonInput").value.trim();
+
+    const error =
+        document.getElementById("error");
+
+    error.style.display = "none";
+
+    if(!input){
+
+        error.innerText =
+            "Silakan masukkan JSON terlebih dahulu.";
+
+        error.style.display = "block";
+
+        return;
+    }
+
+    let data;
+
+    try{
+
+        data = JSON.parse(input);
+
+    }catch(e){
+
+        error.innerText =
+            "JSON tidak valid: " + e.message;
+
+        error.style.display = "block";
+
+        return;
+    }
+
+    /*
+     * Data transaksi utama.
+     *
+     * Beberapa nilai seperti amount hanya tersedia
+     * pada body request di signature_payload JSON contoh.
+     */
+
+    const body = getTransferBody(data);
+
+    const beneficiary =
+        data.beneficiary || {};
+
+    const transfer =
+        data.transfer || {};
+
+    const response =
+        transfer.response || {};
+
+    const request =
+        transfer.request || {};
+
+    const name =
+        beneficiary.name ||
+        body.beneficiaryAccountName ||
+        data.inquiry?.response?.Name ||
+        "-";
+
+    const bank =
+        beneficiary.bankCode ||
+        body.bankCode ||
+        transfer.bankCode ||
+        "-";
+
+    const account =
+        beneficiary.account ||
+        body.beneficiaryAccount ||
+        transfer.beneficiaryAccount ||
+        "-";
+
+    const amount =
+        body.amount ||
+        transfer.amount ||
+        data.amount ||
+        0;
+
+    const referral =
+        transfer.noReferral ||
+        body.noReferral ||
+        "-";
+
+    const journal =
+        response.JurnalSeq ||
+        response.jurnalSeq ||
+        "-";
+
+    const responseCode =
+        response.responseCode ||
+        "-";
+
+    const description =
+        response.responseDescription ||
+        "-";
+
+    const successful =
+        transfer.success === true ||
+        responseCode === "0700";
+
+    /*
+     * Isi tampilan
+     */
+
+    document.getElementById("beneficiaryName")
+        .innerText = safe(name);
+
+    document.getElementById("bankCode")
+        .innerText = safe(bank);
+
+    document.getElementById("beneficiaryAccount")
+        .innerText = safe(account);
+
+    document.getElementById("amount")
+        .innerText = rupiah(amount);
+
+    document.getElementById("referral")
+        .innerText = safe(referral);
+
+    document.getElementById("journal")
+        .innerText = safe(journal);
+
+    document.getElementById("responseCode")
+        .innerText = safe(responseCode);
+
+    document.getElementById("description")
+        .innerText = safe(description);
+
+    document.getElementById("transactionDate")
+        .innerText = formatDate(request.timestamp);
+
+    /*
+     * Status
+     */
+
+    const status =
+        document.getElementById("status");
+
+    const icon =
+        document.getElementById("statusIcon");
+
+    const title =
+        document.getElementById("statusTitle");
+
+    if(successful){
+
+        status.innerText = "Berhasil";
+        status.className = "value green";
+
+        icon.innerText = "✓";
+        title.innerText = "Transaksi Berhasil";
+
+    }else{
+
+        status.innerText = "Tidak Berhasil";
+        status.className = "value red";
+
+        icon.innerText = "!";
+        title.innerText = "Transaksi Tidak Berhasil";
+    }
+
+    /*
+     * Sembunyikan form
+     * tampilkan hasil
+     */
+
+    document.getElementById("inputPanel")
+        .style.display = "none";
+
+    document.getElementById("result")
+        .style.display = "block";
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+function backToForm(){
+
+    document.getElementById("result")
+        .style.display = "none";
+
+    document.getElementById("inputPanel")
+        .style.display = "block";
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+</script>
+
+</body>
+</html>
