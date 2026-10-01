@@ -6,7 +6,9 @@
 <title>Transaction Viewer</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+    box-sizing:border-box;
+}
 
 body{
     margin:0;
@@ -24,7 +26,7 @@ body{
 .input-box{
     max-width:700px;
     margin:auto;
-    background:white;
+    background:#fff;
     padding:24px;
     border-radius:18px;
     box-shadow:0 8px 30px rgba(0,0,0,.07);
@@ -58,7 +60,7 @@ textarea{
     border:0;
     border-radius:11px;
     background:#1769aa;
-    color:white;
+    color:#fff;
     font-size:15px;
     font-weight:bold;
     cursor:pointer;
@@ -78,7 +80,9 @@ textarea{
     font-size:13px;
 }
 
-/* RESULT */
+/* ============================
+   HASIL
+============================ */
 
 #result{
     display:none;
@@ -121,7 +125,7 @@ textarea{
     width:66px;
     height:66px;
     margin:21px auto 14px;
-    background:white;
+    background:#fff;
     color:#1769aa;
     border-radius:50%;
     display:flex;
@@ -219,15 +223,19 @@ textarea{
 }
 
 .secondary{
-    background:white;
+    background:#fff;
     color:#1769aa;
     border:1px solid #1769aa;
 }
 
+/* ============================
+   PRINT
+============================ */
+
 @media print{
 
     body{
-        background:white;
+        background:#fff;
     }
 
     .container{
@@ -256,7 +264,9 @@ textarea{
 
 <div class="container">
 
-    <!-- INPUT -->
+    <!-- ========================
+         INPUT JSON
+    ========================= -->
 
     <div class="input-box" id="inputPanel">
 
@@ -272,7 +282,9 @@ textarea{
     ...
 }'></textarea>
 
-        <button class="btn" onclick="generateReceipt()">
+        <button
+            class="btn"
+            onclick="generateReceipt()">
             Buat Tampilan
         </button>
 
@@ -281,7 +293,9 @@ textarea{
     </div>
 
 
-    <!-- RESULT -->
+    <!-- ========================
+         RESULT
+    ========================= -->
 
     <div id="result">
 
@@ -295,11 +309,15 @@ textarea{
                     KONFIRMASI TRANSAKSI
                 </div>
 
-                <div class="transfer-type" id="transferType">
+                <div
+                    class="transfer-type"
+                    id="transferType">
                     TRANSFER
                 </div>
 
-                <div class="check" id="statusIcon">
+                <div
+                    class="check"
+                    id="statusIcon">
                     ✓
                 </div>
 
@@ -333,7 +351,9 @@ textarea{
 
             <div class="content">
 
-                <!-- PENERIMA -->
+                <!-- ========================
+                     PENERIMA
+                ========================= -->
 
                 <div class="section-title">
                     DETAIL PENERIMA
@@ -346,7 +366,9 @@ textarea{
                         Nama
                     </div>
 
-                    <div class="value" id="beneficiaryName">
+                    <div
+                        class="value"
+                        id="beneficiaryName">
                         -
                     </div>
 
@@ -359,20 +381,26 @@ textarea{
                         Bank Tujuan
                     </div>
 
-                    <div class="value" id="bankName">
+                    <div
+                        class="value"
+                        id="bankName">
                         -
                     </div>
 
                 </div>
 
 
-                <div class="row" id="bankCodeRow">
+                <div
+                    class="row"
+                    id="bankCodeRow">
 
                     <div class="label">
                         Kode Bank
                     </div>
 
-                    <div class="value" id="bankCode">
+                    <div
+                        class="value"
+                        id="bankCode">
                         -
                     </div>
 
@@ -385,58 +413,18 @@ textarea{
                         Rekening Tujuan
                     </div>
 
-                    <div class="value" id="beneficiaryAccount">
+                    <div
+                        class="value"
+                        id="beneficiaryAccount">
                         -
                     </div>
 
                 </div>
 
 
-                <!-- PENGIRIM -->
-
-                <hr class="divider">
-
-
-                <div class="row">
-
-                    <div class="label">
-                        Nama Pengirim
-                    </div>
-
-                    <div class="value" id="sourceName">
-                        -
-                    </div>
-
-                </div>
-
-
-                <div class="row">
-
-                    <div class="label">
-                        Rekening Pengirim
-                    </div>
-
-                    <div class="value" id="sourceAccount">
-                        -
-                    </div>
-
-                </div>
-
-
-                <div class="row">
-
-                    <div class="label">
-                        Bank Pengirim
-                    </div>
-
-                    <div class="value">
-                        BRI
-                    </div>
-
-                </div>
-
-
-                <!-- TRANSAKSI -->
+                <!-- ========================
+                     TRANSAKSI
+                ========================= -->
 
                 <hr class="divider">
 
@@ -452,7 +440,9 @@ textarea{
                         Status
                     </div>
 
-                    <div class="value green" id="status">
+                    <div
+                        class="value green"
+                        id="status">
                         Berhasil
                     </div>
 
@@ -465,7 +455,9 @@ textarea{
                         Jenis Transfer
                     </div>
 
-                    <div class="value" id="transferTypeDetail">
+                    <div
+                        class="value"
+                        id="transferTypeDetail">
                         -
                     </div>
 
@@ -478,7 +470,9 @@ textarea{
                         No. Referral
                     </div>
 
-                    <div class="value" id="referral">
+                    <div
+                        class="value"
+                        id="referral">
                         -
                     </div>
 
@@ -491,7 +485,9 @@ textarea{
                         Jurnal
                     </div>
 
-                    <div class="value" id="journal">
+                    <div
+                        class="value"
+                        id="journal">
                         -
                     </div>
 
@@ -504,7 +500,9 @@ textarea{
                         Response Code
                     </div>
 
-                    <div class="value" id="responseCode">
+                    <div
+                        class="value"
+                        id="responseCode">
                         -
                     </div>
 
@@ -517,7 +515,9 @@ textarea{
                         Keterangan
                     </div>
 
-                    <div class="value" id="description">
+                    <div
+                        class="value"
+                        id="description">
                         -
                     </div>
 
@@ -526,7 +526,9 @@ textarea{
             </div>
 
 
-            <!-- NOTICE -->
+            <!-- ========================
+                 NOTICE
+            ========================= -->
 
             <div class="notice">
 
@@ -539,25 +541,22 @@ textarea{
             </div>
 
 
-            <!-- ACTION -->
+            <!-- ========================
+                 ACTION
+            ========================= -->
 
             <div class="actions">
 
                 <button
                     class="btn"
                     onclick="window.print()">
-
                     Cetak / Simpan PDF
-
                 </button>
-
 
                 <button
                     class="btn secondary"
                     onclick="backToForm()">
-
                     Masukkan JSON Lain
-
                 </button>
 
             </div>
@@ -571,9 +570,9 @@ textarea{
 
 <script>
 
-/* ==============================================
-   HELPER
-============================================== */
+/* ============================
+   SAFE VALUE
+============================ */
 
 function safe(value, fallback = "-"){
 
@@ -589,13 +588,14 @@ function safe(value, fallback = "-"){
 }
 
 
-/* ==============================================
+/* ============================
    FORMAT RUPIAH
-============================================== */
+============================ */
 
 function rupiah(value){
 
-    const number = parseFloat(value);
+    const number =
+        parseFloat(value);
 
     if(isNaN(number)){
         return "Rp0";
@@ -611,9 +611,9 @@ function rupiah(value){
 }
 
 
-/* ==============================================
-   AMBIL BODY REQUEST
-============================================== */
+/* ============================
+   AMBIL BODY TRANSFER
+============================ */
 
 function getTransferBody(data){
 
@@ -624,7 +624,8 @@ function getTransferBody(data){
             ?.request
             ?.signature_payload || "";
 
-        const marker = "&body=";
+        const marker =
+            "&body=";
 
         const index =
             payload.indexOf(marker);
@@ -648,9 +649,9 @@ function getTransferBody(data){
 }
 
 
-/* ==============================================
+/* ============================
    FORMAT TANGGAL
-============================================== */
+============================ */
 
 function formatDate(timestamp){
 
@@ -685,9 +686,9 @@ function formatDate(timestamp){
 }
 
 
-/* ==============================================
-   GENERATE RECEIPT
-============================================== */
+/* ============================
+   GENERATE
+============================ */
 
 function generateReceipt(){
 
@@ -697,10 +698,14 @@ function generateReceipt(){
         .value
         .trim();
 
-    const error =
-        document.getElementById("error");
 
-    error.style.display = "none";
+    const error =
+        document
+        .getElementById("error");
+
+
+    error.style.display =
+        "none";
 
 
     if(!input){
@@ -736,9 +741,9 @@ function generateReceipt(){
     }
 
 
-    /* ==============================================
+    /* ============================
        DETEKSI JENIS TRANSFER
-    ============================================== */
+    ============================ */
 
     const step =
         String(
@@ -776,9 +781,9 @@ function generateReceipt(){
         );
 
 
-    /* ==============================================
-       OBJECT
-    ============================================== */
+    /* ============================
+       DATA
+    ============================ */
 
     const body =
         getTransferBody(data);
@@ -806,9 +811,9 @@ function generateReceipt(){
         ?.data || {};
 
 
-    /* ==============================================
-       PENERIMA
-    ============================================== */
+    /* ============================
+       NAMA PENERIMA
+    ============================ */
 
     const beneficiaryName =
 
@@ -825,6 +830,10 @@ function generateReceipt(){
         "-";
 
 
+    /* ============================
+       REKENING PENERIMA
+    ============================ */
+
     const beneficiaryAccount =
 
         inquiryData.beneficiaryAccount ||
@@ -840,43 +849,27 @@ function generateReceipt(){
         "-";
 
 
-    /* ==============================================
-       PENGIRIM
-    ============================================== */
-
-    const sourceName =
-
-        inquiryData.sourceAccountName ||
-
-        data.sourceAccountName ||
-
-        body.sourceAccountName ||
-
-        "-";
-
-
-    const sourceAccount =
-
-        inquiryData.sourceAccount ||
-
-        body.sourceAccount ||
-
-        data.sourceAccount ||
-
-        "-";
-
-
-    /* ==============================================
+    /* ============================
        BANK TUJUAN
-    ============================================== */
+    ============================ */
 
-    let bankName = "-";
-    let bankCode = "-";
+    let bankName =
+        "-";
+
+
+    let bankCode =
+        "-";
 
 
     if(isInternal){
 
-        bankName = "BRI";
+        /*
+         * internal_transfer
+         * = sesama BRI
+         */
+
+        bankName =
+            "BRI";
 
     }else{
 
@@ -908,9 +901,9 @@ function generateReceipt(){
     }
 
 
-    /* ==============================================
+    /* ============================
        NOMINAL
-    ============================================== */
+    ============================ */
 
     const amount =
 
@@ -923,9 +916,9 @@ function generateReceipt(){
         0;
 
 
-    /* ==============================================
+    /* ============================
        REFERRAL
-    ============================================== */
+    ============================ */
 
     const referral =
 
@@ -938,9 +931,9 @@ function generateReceipt(){
         "-";
 
 
-    /* ==============================================
+    /* ============================
        JURNAL
-    ============================================== */
+    ============================ */
 
     const journal =
 
@@ -953,9 +946,9 @@ function generateReceipt(){
         "-";
 
 
-    /* ==============================================
-       RESPONSE
-    ============================================== */
+    /* ============================
+       RESPONSE CODE
+    ============================ */
 
     const responseCode =
 
@@ -963,6 +956,10 @@ function generateReceipt(){
 
         "-";
 
+
+    /* ============================
+       DESCRIPTION
+    ============================ */
 
     const description =
 
@@ -973,9 +970,9 @@ function generateReceipt(){
         "-";
 
 
-    /* ==============================================
+    /* ============================
        STATUS
-    ============================================== */
+    ============================ */
 
     const successful =
 
@@ -988,9 +985,9 @@ function generateReceipt(){
         responseCode === "0000";
 
 
-    /* ==============================================
-       LABEL TRANSFER
-    ============================================== */
+    /* ============================
+       JENIS TRANSFER
+    ============================ */
 
     let transferLabel =
         "TRANSFER";
@@ -1019,9 +1016,9 @@ function generateReceipt(){
     }
 
 
-    /* ==============================================
+    /* ============================
        HEADER
-    ============================================== */
+    ============================ */
 
     document
         .getElementById(
@@ -1039,9 +1036,9 @@ function generateReceipt(){
             transferDetail;
 
 
-    /* ==============================================
+    /* ============================
        PENERIMA
-    ============================================== */
+    ============================ */
 
     document
         .getElementById(
@@ -1067,17 +1064,23 @@ function generateReceipt(){
             safe(bankName);
 
 
-    /* ==============================================
+    /* ============================
        KODE BANK
-    ============================================== */
+    ============================ */
 
     const bankCodeRow =
-        document.getElementById(
+        document
+        .getElementById(
             "bankCodeRow"
         );
 
 
     if(isInternal){
+
+        /*
+         * Sesama BRI tidak perlu
+         * menampilkan kode bank.
+         */
 
         bankCodeRow.style.display =
             "none";
@@ -1086,6 +1089,7 @@ function generateReceipt(){
 
         bankCodeRow.style.display =
             "flex";
+
 
         document
             .getElementById(
@@ -1097,29 +1101,9 @@ function generateReceipt(){
     }
 
 
-    /* ==============================================
-       PENGIRIM
-    ============================================== */
-
-    document
-        .getElementById(
-            "sourceName"
-        )
-        .innerText =
-            safe(sourceName);
-
-
-    document
-        .getElementById(
-            "sourceAccount"
-        )
-        .innerText =
-            safe(sourceAccount);
-
-
-    /* ==============================================
+    /* ============================
        NOMINAL
-    ============================================== */
+    ============================ */
 
     document
         .getElementById(
@@ -1129,9 +1113,9 @@ function generateReceipt(){
             rupiah(amount);
 
 
-    /* ==============================================
-       DETAIL TRANSAKSI
-    ============================================== */
+    /* ============================
+       REFERRAL
+    ============================ */
 
     document
         .getElementById(
@@ -1141,6 +1125,10 @@ function generateReceipt(){
             safe(referral);
 
 
+    /* ============================
+       JURNAL
+    ============================ */
+
     document
         .getElementById(
             "journal"
@@ -1148,6 +1136,10 @@ function generateReceipt(){
         .innerText =
             safe(journal);
 
+
+    /* ============================
+       RESPONSE CODE
+    ============================ */
 
     document
         .getElementById(
@@ -1157,6 +1149,10 @@ function generateReceipt(){
             safe(responseCode);
 
 
+    /* ============================
+       KETERANGAN
+    ============================ */
+
     document
         .getElementById(
             "description"
@@ -1165,9 +1161,9 @@ function generateReceipt(){
             safe(description);
 
 
-    /* ==============================================
+    /* ============================
        TANGGAL
-    ============================================== */
+    ============================ */
 
     document
         .getElementById(
@@ -1179,24 +1175,27 @@ function generateReceipt(){
             );
 
 
-    /* ==============================================
+    /* ============================
        STATUS
-    ============================================== */
+    ============================ */
 
     const status =
-        document.getElementById(
+        document
+        .getElementById(
             "status"
         );
 
 
     const icon =
-        document.getElementById(
+        document
+        .getElementById(
             "statusIcon"
         );
 
 
     const title =
-        document.getElementById(
+        document
+        .getElementById(
             "statusTitle"
         );
 
@@ -1232,9 +1231,9 @@ function generateReceipt(){
     }
 
 
-    /* ==============================================
-       TAMPILKAN RESULT
-    ============================================== */
+    /* ============================
+       TAMPILKAN HASIL
+    ============================ */
 
     document
         .getElementById(
@@ -1260,9 +1259,9 @@ function generateReceipt(){
 }
 
 
-/* ==============================================
+/* ============================
    KEMBALI
-============================================== */
+============================ */
 
 function backToForm(){
 
@@ -1288,6 +1287,7 @@ function backToForm(){
     });
 
 }
+
 </script>
 
 </body>
