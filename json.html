@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -89,6 +90,16 @@ textarea{
     font-weight:bold;
     letter-spacing:1.5px;
 }
+.transfer-type{
+    display:inline-block;
+    margin-top:10px;
+    padding:5px 10px;
+    border-radius:20px;
+    background:rgba(255,255,255,.16);
+    font-size:10px;
+    font-weight:bold;
+    letter-spacing:.5px;
+}
 .check{
     width:66px;
     height:66px;
@@ -173,6 +184,7 @@ textarea{
     color:#1769aa;
     border:1px solid #1769aa;
 }
+
 @media print{
     body{background:white}
     .container{margin:0;padding:0}
@@ -188,12 +200,16 @@ textarea{
 <div class="container">
 
     <div class="input-box" id="inputPanel">
+
         <h2>JSON Transaction Viewer</h2>
-        <p>Paste response JSON transaksi di bawah ini.</p>
+
+        <p>
+            Mendukung JSON External Transfer dan Internal Transfer.
+        </p>
 
         <textarea id="jsonInput" placeholder='{
     "success": true,
-    "step": "external_transfer",
+    "step": "internal_transfer",
     ...
 }'></textarea>
 
@@ -202,46 +218,133 @@ textarea{
         </button>
 
         <div id="error"></div>
+
     </div>
+
 
     <div id="result">
 
         <div class="card">
 
             <div class="header">
-                <div class="brand">KONFIRMASI TRANSAKSI API</div>
 
-                <div class="check" id="statusIcon">✓</div>
+                <div class="brand">
+                    KONFIRMASI TRANSAKSI API
+                </div>
 
-                <h1 id="statusTitle">Transaksi Berhasil</h1>
+                <div class="transfer-type" id="transferType">
+                    TRANSFER
+                </div>
+
+                <div class="check" id="statusIcon">
+                    ✓
+                </div>
+
+                <h1 id="statusTitle">
+                    Transaksi Berhasil
+                </h1>
+
                 <p id="transactionDate">-</p>
+
             </div>
+
 
             <div class="amount">
+
                 <small>Nominal Transfer</small>
-                <strong id="amount">Rp0</strong>
+
+                <strong id="amount">
+                    Rp0
+                </strong>
+
             </div>
 
+
             <div class="content">
+
+                <!-- PENERIMA -->
 
                 <div class="section-title">
                     DETAIL PENERIMA
                 </div>
 
                 <div class="row">
-                    <div class="label">Nama</div>
-                    <div class="value" id="beneficiaryName">-</div>
+
+                    <div class="label">
+                        Nama
+                    </div>
+
+                    <div class="value" id="beneficiaryName">
+                        -
+                    </div>
+
                 </div>
 
-                <div class="row">
-                    <div class="label">Kode Bank</div>
-                    <div class="value" id="bankCode">-</div>
+
+                <div class="row" id="bankCodeRow">
+
+                    <div class="label">
+                        Kode Bank
+                    </div>
+
+                    <div class="value" id="bankCode">
+                        -
+                    </div>
+
                 </div>
 
+
                 <div class="row">
-                    <div class="label">Rekening Tujuan</div>
-                    <div class="value" id="beneficiaryAccount">-</div>
+
+                    <div class="label">
+                        Rekening Tujuan
+                    </div>
+
+                    <div class="value" id="beneficiaryAccount">
+                        -
+                    </div>
+
                 </div>
+
+
+                <!-- SUMBER DANA -->
+
+                <div id="sourceSection">
+
+                    <hr class="divider">
+
+                    <div class="section-title">
+                        SUMBER DANA
+                    </div>
+
+                    <div class="row">
+
+                        <div class="label">
+                            Nama Rekening
+                        </div>
+
+                        <div class="value" id="sourceName">
+                            -
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="label">
+                            Rekening
+                        </div>
+
+                        <div class="value" id="sourceAccount">
+                            -
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TRANSAKSI -->
 
                 <hr class="divider">
 
@@ -249,37 +352,96 @@ textarea{
                     DETAIL TRANSAKSI
                 </div>
 
-                <div class="row">
-                    <div class="label">Status</div>
-                    <div class="value green" id="status">Berhasil</div>
-                </div>
 
                 <div class="row">
-                    <div class="label">No. Referral</div>
-                    <div class="value" id="referral">-</div>
+
+                    <div class="label">
+                        Status
+                    </div>
+
+                    <div class="value green" id="status">
+                        Berhasil
+                    </div>
+
                 </div>
 
-                <div class="row">
-                    <div class="label">Jurnal</div>
-                    <div class="value" id="journal">-</div>
-                </div>
 
                 <div class="row">
-                    <div class="label">Response Code</div>
-                    <div class="value" id="responseCode">-</div>
+
+                    <div class="label">
+                        No. Referral
+                    </div>
+
+                    <div class="value" id="referral">
+                        -
+                    </div>
+
                 </div>
 
+
                 <div class="row">
-                    <div class="label">Keterangan</div>
-                    <div class="value" id="description">-</div>
+
+                    <div class="label">
+                        Jurnal
+                    </div>
+
+                    <div class="value" id="journal">
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="label">
+                        Response Code
+                    </div>
+
+                    <div class="value" id="responseCode">
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="label">
+                        Keterangan
+                    </div>
+
+                    <div class="value" id="description">
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="row" id="remarkRow">
+
+                    <div class="label">
+                        Remark
+                    </div>
+
+                    <div class="value" id="remark">
+                        -
+                    </div>
+
                 </div>
 
             </div>
+
 
             <div class="notice">
+
                 BUKAN BUKTI TRANSFER RESMI BANK<br>
-                Tampilan ini dibuat berdasarkan data JSON/API yang dimasukkan.
+
+                Tampilan ini dibuat berdasarkan data JSON/API
+                yang dimasukkan.
+
             </div>
+
 
             <div class="actions">
 
@@ -287,8 +449,12 @@ textarea{
                     Cetak / Simpan PDF
                 </button>
 
-                <button class="btn secondary" onclick="backToForm()">
+                <button
+                    class="btn secondary"
+                    onclick="backToForm()">
+
                     Masukkan JSON Lain
+
                 </button>
 
             </div>
@@ -299,15 +465,31 @@ textarea{
 
 </div>
 
+
 <script>
+
 function safe(value, fallback = "-"){
-    if(value === undefined || value === null || value === ""){
+
+    if(
+        value === undefined ||
+        value === null ||
+        value === ""
+    ){
         return fallback;
     }
+
     return String(value).trim();
 }
 
+
+/*
+|--------------------------------------------------------------------------
+| FORMAT RUPIAH
+|--------------------------------------------------------------------------
+*/
+
 function rupiah(value){
+
     let number = parseFloat(value);
 
     if(isNaN(number)){
@@ -315,32 +497,62 @@ function rupiah(value){
     }
 
     return "Rp" + new Intl.NumberFormat("id-ID", {
-        maximumFractionDigits: 0
+        maximumFractionDigits:0
     }).format(number);
 }
+
+
+/*
+|--------------------------------------------------------------------------
+| AMBIL BODY DARI SIGNATURE PAYLOAD
+|--------------------------------------------------------------------------
+|
+| Contoh:
+|
+| &body={
+|   "sourceAccount":"...",
+|   "beneficiaryAccount":"...",
+|   "amount":"55000.00"
+| }
+|
+*/
 
 function getTransferBody(data){
 
     try{
+
         const payload =
             data.transfer?.request?.signature_payload || "";
 
         const marker = "&body=";
 
-        const index = payload.indexOf(marker);
+        const index =
+            payload.indexOf(marker);
 
         if(index === -1){
             return {};
         }
 
-        const body = payload.substring(index + marker.length);
+        const body =
+            payload.substring(
+                index + marker.length
+            );
 
         return JSON.parse(body);
 
     }catch(e){
+
         return {};
+
     }
 }
+
+
+/*
+|--------------------------------------------------------------------------
+| FORMAT TANGGAL
+|--------------------------------------------------------------------------
+*/
 
 function formatDate(timestamp){
 
@@ -350,33 +562,50 @@ function formatDate(timestamp){
 
     try{
 
-        const date = new Date(timestamp);
+        const date =
+            new Date(timestamp);
 
-        return new Intl.DateTimeFormat("id-ID", {
-            timeZone:"Asia/Jakarta",
-            day:"2-digit",
-            month:"long",
-            year:"numeric",
-            hour:"2-digit",
-            minute:"2-digit",
-            second:"2-digit",
-            hour12:false
-        }).format(date) + " WIB";
+        return new Intl.DateTimeFormat(
+            "id-ID",
+            {
+                timeZone:"Asia/Jakarta",
+                day:"2-digit",
+                month:"long",
+                year:"numeric",
+                hour:"2-digit",
+                minute:"2-digit",
+                second:"2-digit",
+                hour12:false
+            }
+        ).format(date) + " WIB";
 
     }catch(e){
+
         return timestamp;
+
     }
 }
+
+
+/*
+|--------------------------------------------------------------------------
+| GENERATE RECEIPT
+|--------------------------------------------------------------------------
+*/
 
 function generateReceipt(){
 
     const input =
-        document.getElementById("jsonInput").value.trim();
+        document
+        .getElementById("jsonInput")
+        .value
+        .trim();
 
     const error =
         document.getElementById("error");
 
     error.style.display = "none";
+
 
     if(!input){
 
@@ -388,7 +617,9 @@ function generateReceipt(){
         return;
     }
 
+
     let data;
+
 
     try{
 
@@ -404,14 +635,31 @@ function generateReceipt(){
         return;
     }
 
-    /*
-     * Data transaksi utama.
-     *
-     * Beberapa nilai seperti amount hanya tersedia
-     * pada body request di signature_payload JSON contoh.
-     */
 
-    const body = getTransferBody(data);
+    /*
+    |--------------------------------------------------------------------------
+    | DETEKSI JENIS TRANSFER
+    |--------------------------------------------------------------------------
+    */
+
+    const step =
+        String(data.step || "").toLowerCase();
+
+    const isInternal =
+        step.includes("internal");
+
+    const isExternal =
+        step.includes("external");
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | DATA DASAR
+    |--------------------------------------------------------------------------
+    */
+
+    const body =
+        getTransferBody(data);
 
     const beneficiary =
         data.beneficiary || {};
@@ -425,86 +673,351 @@ function generateReceipt(){
     const request =
         transfer.request || {};
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | DATA INQUIRY INTERNAL
+    |--------------------------------------------------------------------------
+    */
+
+    const inquiryResponse =
+        data.inquiry?.response || {};
+
+    const inquiryData =
+        inquiryResponse.data || {};
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | NAMA PENERIMA
+    |--------------------------------------------------------------------------
+    |
+    | External:
+    | data.beneficiary.name
+    |
+    | Internal:
+    | data.inquiry.response.data.beneficiaryAccountName
+    |
+    */
+
     const name =
         beneficiary.name ||
+
+        inquiryData.beneficiaryAccountName ||
+
         body.beneficiaryAccountName ||
+
         data.inquiry?.response?.Name ||
+
+        data.inquiry?.response?.name ||
+
         "-";
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | KODE BANK
+    |--------------------------------------------------------------------------
+    */
 
     const bank =
         beneficiary.bankCode ||
+
         body.bankCode ||
+
         transfer.bankCode ||
-        "-";
+
+        (isInternal ? "BRI" : "-");
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | REKENING TUJUAN
+    |--------------------------------------------------------------------------
+    */
 
     const account =
         beneficiary.account ||
+
+        inquiryData.beneficiaryAccount ||
+
         body.beneficiaryAccount ||
+
         transfer.beneficiaryAccount ||
+
         "-";
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | NOMINAL
+    |--------------------------------------------------------------------------
+    */
 
     const amount =
         body.amount ||
+
         transfer.amount ||
+
         data.amount ||
+
         0;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | REKENING SUMBER
+    |--------------------------------------------------------------------------
+    */
+
+    const sourceAccount =
+        inquiryData.sourceAccount ||
+
+        body.sourceAccount ||
+
+        "-";
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | NAMA SUMBER
+    |--------------------------------------------------------------------------
+    */
+
+    const sourceName =
+        inquiryData.sourceAccountName ||
+
+        "-";
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | REFERRAL
+    |--------------------------------------------------------------------------
+    */
 
     const referral =
         transfer.noReferral ||
+
         body.noReferral ||
+
         "-";
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | JOURNAL
+    |--------------------------------------------------------------------------
+    */
 
     const journal =
         response.JurnalSeq ||
+
         response.jurnalSeq ||
+
+        response.journalSeq ||
+
         "-";
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | RESPONSE
+    |--------------------------------------------------------------------------
+    */
 
     const responseCode =
         response.responseCode ||
+
         "-";
+
 
     const description =
         response.responseDescription ||
+
+        response.errorDescription ||
+
         "-";
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | REMARK
+    |--------------------------------------------------------------------------
+    */
+
+    const remark =
+        body.remark ||
+
+        transfer.remark ||
+
+        "-";
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | STATUS TRANSAKSI
+    |--------------------------------------------------------------------------
+    |
+    | External success biasanya:
+    | 0700
+    |
+    | Internal success:
+    | 0200
+    |
+    */
 
     const successful =
         transfer.success === true ||
-        responseCode === "0700";
+
+        responseCode === "0200" ||
+
+        responseCode === "0700" ||
+
+        responseCode === "0000";
+
 
     /*
-     * Isi tampilan
-     */
+    |--------------------------------------------------------------------------
+    | JENIS TRANSFER
+    |--------------------------------------------------------------------------
+    */
 
-    document.getElementById("beneficiaryName")
+    let transferLabel = "TRANSFER";
+
+    if(isInternal){
+
+        transferLabel =
+            "TRANSFER INTERNAL BRI";
+
+    }else if(isExternal){
+
+        transferLabel =
+            "TRANSFER ANTARBANK";
+
+    }
+
+
+    document
+        .getElementById("transferType")
+        .innerText = transferLabel;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | ISI DATA PENERIMA
+    |--------------------------------------------------------------------------
+    */
+
+    document
+        .getElementById("beneficiaryName")
         .innerText = safe(name);
 
-    document.getElementById("bankCode")
+
+    document
+        .getElementById("bankCode")
         .innerText = safe(bank);
 
-    document.getElementById("beneficiaryAccount")
+
+    document
+        .getElementById("beneficiaryAccount")
         .innerText = safe(account);
 
-    document.getElementById("amount")
-        .innerText = rupiah(amount);
-
-    document.getElementById("referral")
-        .innerText = safe(referral);
-
-    document.getElementById("journal")
-        .innerText = safe(journal);
-
-    document.getElementById("responseCode")
-        .innerText = safe(responseCode);
-
-    document.getElementById("description")
-        .innerText = safe(description);
-
-    document.getElementById("transactionDate")
-        .innerText = formatDate(request.timestamp);
 
     /*
-     * Status
-     */
+    |--------------------------------------------------------------------------
+    | SUMBER DANA
+    |--------------------------------------------------------------------------
+    */
+
+    document
+        .getElementById("sourceName")
+        .innerText = safe(sourceName);
+
+
+    document
+        .getElementById("sourceAccount")
+        .innerText = safe(sourceAccount);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | NOMINAL
+    |--------------------------------------------------------------------------
+    */
+
+    document
+        .getElementById("amount")
+        .innerText = rupiah(amount);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | DETAIL TRANSAKSI
+    |--------------------------------------------------------------------------
+    */
+
+    document
+        .getElementById("referral")
+        .innerText = safe(referral);
+
+
+    document
+        .getElementById("journal")
+        .innerText = safe(journal);
+
+
+    document
+        .getElementById("responseCode")
+        .innerText = safe(responseCode);
+
+
+    document
+        .getElementById("description")
+        .innerText = safe(description);
+
+
+    document
+        .getElementById("remark")
+        .innerText = safe(remark);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | TANGGAL
+    |--------------------------------------------------------------------------
+    */
+
+    document
+        .getElementById("transactionDate")
+        .innerText =
+            formatDate(request.timestamp);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | INTERNAL TRANSFER
+    |--------------------------------------------------------------------------
+    |
+    | Karena internal BRI tidak membutuhkan kode bank,
+    | kita tampilkan "BRI".
+    |
+    */
+
+    if(isInternal){
+
+        document
+            .getElementById("bankCode")
+            .innerText = "BRI";
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | STATUS
+    |--------------------------------------------------------------------------
+    */
 
     const status =
         document.getElementById("status");
@@ -515,54 +1028,89 @@ function generateReceipt(){
     const title =
         document.getElementById("statusTitle");
 
+
     if(successful){
 
-        status.innerText = "Berhasil";
-        status.className = "value green";
+        status.innerText =
+            "Berhasil";
 
-        icon.innerText = "✓";
-        title.innerText = "Transaksi Berhasil";
+        status.className =
+            "value green";
+
+        icon.innerText =
+            "✓";
+
+        title.innerText =
+            "Transaksi Berhasil";
 
     }else{
 
-        status.innerText = "Tidak Berhasil";
-        status.className = "value red";
+        status.innerText =
+            "Tidak Berhasil";
 
-        icon.innerText = "!";
-        title.innerText = "Transaksi Tidak Berhasil";
+        status.className =
+            "value red";
+
+        icon.innerText =
+            "!";
+
+        title.innerText =
+            "Transaksi Tidak Berhasil";
+
     }
 
-    /*
-     * Sembunyikan form
-     * tampilkan hasil
-     */
 
-    document.getElementById("inputPanel")
+    /*
+    |--------------------------------------------------------------------------
+    | TAMPILKAN HASIL
+    |--------------------------------------------------------------------------
+    */
+
+    document
+        .getElementById("inputPanel")
         .style.display = "none";
 
-    document.getElementById("result")
+
+    document
+        .getElementById("result")
         .style.display = "block";
+
 
     window.scrollTo({
         top:0,
         behavior:"smooth"
     });
+
 }
+
+
+/*
+|--------------------------------------------------------------------------
+| KEMBALI
+|--------------------------------------------------------------------------
+*/
 
 function backToForm(){
 
-    document.getElementById("result")
+    document
+        .getElementById("result")
         .style.display = "none";
 
-    document.getElementById("inputPanel")
+
+    document
+        .getElementById("inputPanel")
         .style.display = "block";
+
 
     window.scrollTo({
         top:0,
         behavior:"smooth"
     });
+
 }
+
 </script>
 
 </body>
 </html>
+```
