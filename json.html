@@ -1,10 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JSON Transaction Viewer</title>
+<title>Transaction Viewer</title>
 
 <style>
 *{box-sizing:border-box}
@@ -79,9 +78,7 @@ textarea{
     font-size:13px;
 }
 
-/* =========================
-   RESULT
-========================= */
+/* RESULT */
 
 #result{
     display:none;
@@ -259,7 +256,7 @@ textarea{
 
 <div class="container">
 
-    <!-- INPUT JSON -->
+    <!-- INPUT -->
 
     <div class="input-box" id="inputPanel">
 
@@ -284,7 +281,7 @@ textarea{
     </div>
 
 
-    <!-- HASIL -->
+    <!-- RESULT -->
 
     <div id="result">
 
@@ -295,18 +292,14 @@ textarea{
             <div class="header">
 
                 <div class="brand">
-                    KONFIRMASI TRANSAKSI API
+                    KONFIRMASI TRANSAKSI
                 </div>
 
-                <div
-                    class="transfer-type"
-                    id="transferType">
+                <div class="transfer-type" id="transferType">
                     TRANSFER
                 </div>
 
-                <div
-                    class="check"
-                    id="statusIcon">
+                <div class="check" id="statusIcon">
                     ✓
                 </div>
 
@@ -336,8 +329,9 @@ textarea{
             </div>
 
 
-            <div class="content">
+            <!-- CONTENT -->
 
+            <div class="content">
 
                 <!-- PENERIMA -->
 
@@ -352,9 +346,7 @@ textarea{
                         Nama
                     </div>
 
-                    <div
-                        class="value"
-                        id="beneficiaryName">
+                    <div class="value" id="beneficiaryName">
                         -
                     </div>
 
@@ -367,26 +359,20 @@ textarea{
                         Bank Tujuan
                     </div>
 
-                    <div
-                        class="value"
-                        id="bankName">
+                    <div class="value" id="bankName">
                         -
                     </div>
 
                 </div>
 
 
-                <div
-                    class="row"
-                    id="bankCodeRow">
+                <div class="row" id="bankCodeRow">
 
                     <div class="label">
                         Kode Bank
                     </div>
 
-                    <div
-                        class="value"
-                        id="bankCode">
+                    <div class="value" id="bankCode">
                         -
                     </div>
 
@@ -399,74 +385,61 @@ textarea{
                         Rekening Tujuan
                     </div>
 
-                    <div
-                        class="value"
-                        id="beneficiaryAccount">
+                    <div class="value" id="beneficiaryAccount">
                         -
                     </div>
 
                 </div>
 
 
-                <!-- SUMBER DANA -->
+                <!-- PENGIRIM -->
 
-                <div id="sourceSection">
+                <hr class="divider">
 
-                    <hr class="divider">
 
-                    <div class="section-title">
-                        SUMBER DANA
+                <div class="row">
+
+                    <div class="label">
+                        Nama Pengirim
                     </div>
 
-
-                    <div class="row">
-
-                        <div class="label">
-                            Nama Rekening
-                        </div>
-
-                        <div
-                            class="value"
-                            id="sourceName">
-                            -
-                        </div>
-
-                    </div>
-
-
-                    <div class="row">
-
-                        <div class="label">
-                            Rekening
-                        </div>
-
-                        <div
-                            class="value"
-                            id="sourceAccount">
-                            -
-                        </div>
-
-                    </div>
-
-
-                    <div class="row">
-
-                        <div class="label">
-                            Bank
-                        </div>
-
-                        <div class="value">
-                            BRI
-                        </div>
-
+                    <div class="value" id="sourceName">
+                        -
                     </div>
 
                 </div>
 
 
-                <!-- DETAIL TRANSAKSI -->
+                <div class="row">
+
+                    <div class="label">
+                        Rekening Pengirim
+                    </div>
+
+                    <div class="value" id="sourceAccount">
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="label">
+                        Bank Pengirim
+                    </div>
+
+                    <div class="value">
+                        BRI
+                    </div>
+
+                </div>
+
+
+                <!-- TRANSAKSI -->
 
                 <hr class="divider">
+
 
                 <div class="section-title">
                     DETAIL TRANSAKSI
@@ -479,9 +452,7 @@ textarea{
                         Status
                     </div>
 
-                    <div
-                        class="value green"
-                        id="status">
+                    <div class="value green" id="status">
                         Berhasil
                     </div>
 
@@ -494,9 +465,7 @@ textarea{
                         Jenis Transfer
                     </div>
 
-                    <div
-                        class="value"
-                        id="transferTypeDetail">
+                    <div class="value" id="transferTypeDetail">
                         -
                     </div>
 
@@ -509,9 +478,7 @@ textarea{
                         No. Referral
                     </div>
 
-                    <div
-                        class="value"
-                        id="referral">
+                    <div class="value" id="referral">
                         -
                     </div>
 
@@ -524,9 +491,7 @@ textarea{
                         Jurnal
                     </div>
 
-                    <div
-                        class="value"
-                        id="journal">
+                    <div class="value" id="journal">
                         -
                     </div>
 
@@ -539,9 +504,7 @@ textarea{
                         Response Code
                     </div>
 
-                    <div
-                        class="value"
-                        id="responseCode">
+                    <div class="value" id="responseCode">
                         -
                     </div>
 
@@ -554,9 +517,7 @@ textarea{
                         Keterangan
                     </div>
 
-                    <div
-                        class="value"
-                        id="description">
+                    <div class="value" id="description">
                         -
                     </div>
 
@@ -572,13 +533,13 @@ textarea{
                 BUKAN BUKTI TRANSFER RESMI BANK
                 <br>
 
-                Tampilan ini dibuat berdasarkan data
-                JSON/API yang dimasukkan.
+                Tampilan ini dibuat berdasarkan
+                data JSON yang dimasukkan.
 
             </div>
 
 
-            <!-- BUTTON -->
+            <!-- ACTION -->
 
             <div class="actions">
 
@@ -610,9 +571,9 @@ textarea{
 
 <script>
 
-/* =========================
-   SAFE VALUE
-========================= */
+/* ==============================================
+   HELPER
+============================================== */
 
 function safe(value, fallback = "-"){
 
@@ -628,14 +589,13 @@ function safe(value, fallback = "-"){
 }
 
 
-/* =========================
+/* ==============================================
    FORMAT RUPIAH
-========================= */
+============================================== */
 
 function rupiah(value){
 
-    const number =
-        parseFloat(value);
+    const number = parseFloat(value);
 
     if(isNaN(number)){
         return "Rp0";
@@ -651,9 +611,9 @@ function rupiah(value){
 }
 
 
-/* =========================
+/* ==============================================
    AMBIL BODY REQUEST
-========================= */
+============================================== */
 
 function getTransferBody(data){
 
@@ -664,8 +624,7 @@ function getTransferBody(data){
             ?.request
             ?.signature_payload || "";
 
-        const marker =
-            "&body=";
+        const marker = "&body=";
 
         const index =
             payload.indexOf(marker);
@@ -689,9 +648,9 @@ function getTransferBody(data){
 }
 
 
-/* =========================
+/* ==============================================
    FORMAT TANGGAL
-========================= */
+============================================== */
 
 function formatDate(timestamp){
 
@@ -726,9 +685,9 @@ function formatDate(timestamp){
 }
 
 
-/* =========================
-   GENERATE
-========================= */
+/* ==============================================
+   GENERATE RECEIPT
+============================================== */
 
 function generateReceipt(){
 
@@ -741,8 +700,7 @@ function generateReceipt(){
     const error =
         document.getElementById("error");
 
-    error.style.display =
-        "none";
+    error.style.display = "none";
 
 
     if(!input){
@@ -778,9 +736,9 @@ function generateReceipt(){
     }
 
 
-    /* =========================
-       DETEKSI TRANSFER
-    ========================= */
+    /* ==============================================
+       DETEKSI JENIS TRANSFER
+    ============================================== */
 
     const step =
         String(
@@ -818,35 +776,39 @@ function generateReceipt(){
         );
 
 
-    /* =========================
+    /* ==============================================
        OBJECT
-    ========================= */
+    ============================================== */
 
     const body =
         getTransferBody(data);
 
+
     const beneficiary =
         data.beneficiary || {};
+
 
     const transfer =
         data.transfer || {};
 
+
     const response =
         transfer.response || {};
+
 
     const request =
         transfer.request || {};
 
-    const inquiryResponse =
-        data.inquiry?.response || {};
 
     const inquiryData =
-        inquiryResponse.data || {};
+        data.inquiry
+        ?.response
+        ?.data || {};
 
 
-    /* =========================
+    /* ==============================================
        PENERIMA
-    ========================= */
+    ============================================== */
 
     const beneficiaryName =
 
@@ -878,9 +840,20 @@ function generateReceipt(){
         "-";
 
 
-    /* =========================
-       SUMBER DANA
-    ========================= */
+    /* ==============================================
+       PENGIRIM
+    ============================================== */
+
+    const sourceName =
+
+        inquiryData.sourceAccountName ||
+
+        data.sourceAccountName ||
+
+        body.sourceAccountName ||
+
+        "-";
+
 
     const sourceAccount =
 
@@ -888,42 +861,24 @@ function generateReceipt(){
 
         body.sourceAccount ||
 
-        "-";
-
-
-    const sourceName =
-
-        inquiryData.sourceAccountName ||
+        data.sourceAccount ||
 
         "-";
 
 
-    /* =========================
-       BANK
-    ========================= */
+    /* ==============================================
+       BANK TUJUAN
+    ============================================== */
 
     let bankName = "-";
-
     let bankCode = "-";
 
 
     if(isInternal){
 
-        /*
-         * INTERNAL = BRI KE BRI
-         */
-
-        bankName =
-            "BRI";
-
-        bankCode =
-            "-";
+        bankName = "BRI";
 
     }else{
-
-        /*
-         * EXTERNAL = ANTARBANK
-         */
 
         bankName =
 
@@ -932,6 +887,8 @@ function generateReceipt(){
             body.bankName ||
 
             transfer.bankName ||
+
+            data.bankName ||
 
             "-";
 
@@ -944,14 +901,16 @@ function generateReceipt(){
 
             transfer.bankCode ||
 
+            data.bankCode ||
+
             "-";
 
     }
 
 
-    /* =========================
+    /* ==============================================
        NOMINAL
-    ========================= */
+    ============================================== */
 
     const amount =
 
@@ -964,9 +923,9 @@ function generateReceipt(){
         0;
 
 
-    /* =========================
+    /* ==============================================
        REFERRAL
-    ========================= */
+    ============================================== */
 
     const referral =
 
@@ -974,12 +933,14 @@ function generateReceipt(){
 
         body.noReferral ||
 
+        data.noReferral ||
+
         "-";
 
 
-    /* =========================
-       JOURNAL
-    ========================= */
+    /* ==============================================
+       JURNAL
+    ============================================== */
 
     const journal =
 
@@ -992,9 +953,9 @@ function generateReceipt(){
         "-";
 
 
-    /* =========================
+    /* ==============================================
        RESPONSE
-    ========================= */
+    ============================================== */
 
     const responseCode =
 
@@ -1012,9 +973,9 @@ function generateReceipt(){
         "-";
 
 
-    /* =========================
+    /* ==============================================
        STATUS
-    ========================= */
+    ============================================== */
 
     const successful =
 
@@ -1027,9 +988,9 @@ function generateReceipt(){
         responseCode === "0000";
 
 
-    /* =========================
+    /* ==============================================
        LABEL TRANSFER
-    ========================= */
+    ============================================== */
 
     let transferLabel =
         "TRANSFER";
@@ -1058,12 +1019,14 @@ function generateReceipt(){
     }
 
 
-    /* =========================
+    /* ==============================================
        HEADER
-    ========================= */
+    ============================================== */
 
     document
-        .getElementById("transferType")
+        .getElementById(
+            "transferType"
+        )
         .innerText =
             transferLabel;
 
@@ -1076,9 +1039,9 @@ function generateReceipt(){
             transferDetail;
 
 
-    /* =========================
+    /* ==============================================
        PENERIMA
-    ========================= */
+    ============================================== */
 
     document
         .getElementById(
@@ -1104,9 +1067,9 @@ function generateReceipt(){
             safe(bankName);
 
 
-    /* =========================
+    /* ==============================================
        KODE BANK
-    ========================= */
+    ============================================== */
 
     const bankCodeRow =
         document.getElementById(
@@ -1116,21 +1079,10 @@ function generateReceipt(){
 
     if(isInternal){
 
-        /*
-         * SESAMA BRI
-         *
-         * Tidak perlu menampilkan
-         * kode bank.
-         */
-
         bankCodeRow.style.display =
             "none";
 
     }else{
-
-        /*
-         * ANTARBANK
-         */
 
         bankCodeRow.style.display =
             "flex";
@@ -1145,9 +1097,9 @@ function generateReceipt(){
     }
 
 
-    /* =========================
-       SUMBER
-    ========================= */
+    /* ==============================================
+       PENGIRIM
+    ============================================== */
 
     document
         .getElementById(
@@ -1165,9 +1117,9 @@ function generateReceipt(){
             safe(sourceAccount);
 
 
-    /* =========================
+    /* ==============================================
        NOMINAL
-    ========================= */
+    ============================================== */
 
     document
         .getElementById(
@@ -1177,9 +1129,9 @@ function generateReceipt(){
             rupiah(amount);
 
 
-    /* =========================
-       TRANSAKSI
-    ========================= */
+    /* ==============================================
+       DETAIL TRANSAKSI
+    ============================================== */
 
     document
         .getElementById(
@@ -1213,9 +1165,9 @@ function generateReceipt(){
             safe(description);
 
 
-    /* =========================
+    /* ==============================================
        TANGGAL
-    ========================= */
+    ============================================== */
 
     document
         .getElementById(
@@ -1227,19 +1179,21 @@ function generateReceipt(){
             );
 
 
-    /* =========================
-       STATUS DISPLAY
-    ========================= */
+    /* ==============================================
+       STATUS
+    ============================================== */
 
     const status =
         document.getElementById(
             "status"
         );
 
+
     const icon =
         document.getElementById(
             "statusIcon"
         );
+
 
     const title =
         document.getElementById(
@@ -1278,9 +1232,9 @@ function generateReceipt(){
     }
 
 
-    /* =========================
-       SHOW RESULT
-    ========================= */
+    /* ==============================================
+       TAMPILKAN RESULT
+    ============================================== */
 
     document
         .getElementById(
@@ -1306,9 +1260,9 @@ function generateReceipt(){
 }
 
 
-/* =========================
-   BACK
-========================= */
+/* ==============================================
+   KEMBALI
+============================================== */
 
 function backToForm(){
 
